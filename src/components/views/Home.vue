@@ -1,26 +1,25 @@
 <script setup>
-import { onActivated, onBeforeUnmount, onDeactivated, onMounted, onUnmounted } from "vue";
-import PesquisarVaga from "../comuns/PesquisarVaga.vue";
-import Indicador from "../comuns/Indicador.vue";
+import { ref, onMounted, onActivated } from "vue";
+import PesquisarVaga from "@/components/comuns/PesquisarVaga.vue";
+import Indicador from "@/components/comuns/Indicador.vue";
+import Vaga from "@/components/comuns/Vaga.vue";
+
+
+const usuariosOnline = ref(0);
+
+const getUsuariosOnline = () => {
+    usuariosOnline.value = Math.floor(Math.random() * 101);
+    return usuariosOnline;
+}
 
 onMounted(() => {
-    console.log('Componente é montado')
-})
+    setInterval(getUsuariosOnline, 2000);
+});
+
+const vagas = ref([]);
 
 onActivated(() => {
-    console.log('Componente é ativado')
-});
-
-onDeactivated(() => {
-    console.log('Componente desativado')
-});
-
-onBeforeUnmount(() => {
-    console.log('Antes de desmontar/destruir');
-});
-
-onUnmounted(() => {
-    console.log('Desmontado/destruído');
+    vagas.value = JSON.parse(localStorage.getItem('vagas'));
 });
 
 </script>
@@ -33,17 +32,25 @@ onUnmounted(() => {
             </div>
         </div>
 
+        <div class="row mt-5" v-for="(vaga, index) in vagas" :key="index">
+            <div class="col">
+                <Vaga :titulo="vaga.titulo" :descricao="vaga.descricao" :salario="vaga.salario"
+                    :modalidade="vaga.modalidade" :tipo="vaga.tipo" :publicacao="vaga.publicacao" />
+            </div>
+        </div>
+
         <div class="row mt-5">
             <div class="col-4">
-                <Indicador />
+                <Indicador titulo="Vagas abertas" indicador="100" bg="bg-light" color="text-dark" />
             </div>
 
             <div class="col-4">
-                <Indicador />
+                <Indicador titulo="Profissionais cadastrados" indicador="225" bg="bg-dark" color="text-white" />
             </div>
 
             <div class="col-4">
-                <Indicador />
+                <Indicador titulo="Visitantes online" :indicador="getUsuariosOnline()" bg="bg-light"
+                    color="text-dark" />
             </div>
         </div>
     </div>
