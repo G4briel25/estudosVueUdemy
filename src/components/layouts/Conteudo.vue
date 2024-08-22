@@ -41,39 +41,29 @@ const componentes = {
 const conteudo = ref('Home');
 
 // Lifecycle Hooks
-onBeforeMount(showMessage);
+// onBeforeMount(showMessage);
 
-onMounted(showMessage);
+// onMounted(showMessage);
 
-onBeforeUpdate(() => {
-    console.log('Antes de atualizar')
-});
+// onBeforeUpdate(() => {
+//     console.log('Antes de atualizar')
+// });
 
-onUpdated(() => {
-    console.log('Atualizado')
-});
+// onUpdated(() => {
+//     console.log('Atualizado')
+// });
 
-/*
-onErrorCaptured(() => {
-    console.log('Erro capturado')
-});
+// onErrorCaptured(() => {
+//     console.log('Erro capturado')
+// });
 
-onRenderTracked(() => {
-    console.log('Re-renderização rastreada')
-});
+// onRenderTracked(() => {
+//     console.log('Re-renderização rastreada')
+// });
 
-onRenderTriggered(() => {
-    console.log('Re-renderização acionada')
-});
-
-onActivated(() => {
-    console.log('Componente é ativado')
-});
-
-onDeactivated(() => {
-    console.log('Componente desativado')
-});
-*/
+// onRenderTriggered(() => {
+//     console.log('Re-renderização acionada')
+// });
 
 </script>
 
@@ -85,7 +75,9 @@ onDeactivated(() => {
     <button class="btn btn-warning" @click="desmontarComponente()">Desmontar Componente</button><br><br>
     <button class="btn btn-success" @click="conteudo = 'Home'">Home</button>
     <button class="btn btn-primary" @click="conteudo = 'PublicarVaga'">Publicar Vaga</button>
-    <component :is="componentes[conteudo]"></component>
+    <keep-alive>
+        <component :is="componentes[conteudo]"></component>
+    </keep-alive>
 </template>
 
 <style scoped></style>
