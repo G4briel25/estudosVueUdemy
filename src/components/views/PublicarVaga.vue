@@ -5,13 +5,16 @@ const data = ref({
     titulo: '',
     descricao: '',
     salario: '',
-    modalidades: '',
-    tipo: ''
+    modalidade: null,
+    tipo: null
 });
 
 const salvarVaga = () => {
+    let tempoDecorrido = Date.now();
+    let datAtual = new Date(tempoDecorrido);
+    let dataPublicacao = datAtual.toISOString();
+
     let vagas = JSON.parse(localStorage.getItem('vagas'));
-    console.log(vagas)
 
     if (!vagas) vagas = [];
 
@@ -19,11 +22,13 @@ const salvarVaga = () => {
         titulo: data.value.titulo,
         descricao: data.value.descricao,
         salario: data.value.salario,
-        modalidades: data.value.modalidades,
-        tipo: data.value.tipo
+        modalidade: data.value.modalidade,
+        tipo: data.value.tipo,
+        publicacao: dataPublicacao
     });
 
     localStorage.setItem('vagas', JSON.stringify(vagas));
+    console.log('Dados salvos:', JSON.stringify(vagas));
 }
 </script>
 
@@ -60,17 +65,17 @@ const salvarVaga = () => {
 
             <div class="col">
                 <label class="form-label">Modalidade</label>
-                <select class="form-select" v-model="data.modalidades">
+                <select class="form-select" v-model.number="data.modalidade">
                     <option value="" selected disabled>--Selecione</option>
                     <option value="1">Home Office</option>
                     <option value="2">Presencial</option>
                 </select>
-                <div class="form-text">Informe onde as atividades serão realizadas.</div>
+                <div class="form-text">Informe o tipo de contratação.</div>
             </div>
 
             <div class="col">
                 <label class="form-label">Tipo</label>
-                <select class="form-select" v-model="data.tipo">
+                <select class="form-select" v-model.number="data.tipo">
                     <option value="" selected disabled>--Selecione</option>
                     <option value="1">CLT</option>
                     <option value="2">PJ</option>
