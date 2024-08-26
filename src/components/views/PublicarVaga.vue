@@ -30,11 +30,24 @@ const salvarVaga = () => {
         publicacao: dataPublicacao
     });
 
-    //localStorage.setItem('vagas', JSON.stringify(vagas));
+    if (validaFormulario()) {
+        localStorage.setItem('vagas', JSON.stringify(vagas));
 
-    thisVue.emitter.emit('alerta')
+        thisVue.emitter.emit('alerta', {
+            tipo: 'sucesso',
+            titulo: `A vaga ${data.value.titulo}`,
+            descricao: `Parabéns, a vaga foi cadastrada e poderá ser consultada por milhares de profissionais`
+        });
 
-    limparFormulario();
+        limparFormulario();
+
+    } else {
+        thisVue.emitter.emit('alerta', {
+            tipo: 'erro',
+            titulo: `Opss... Não foi possível realizar o cadastro.`,
+            descricao: `É obrigatório preencher todos os campos!`
+        });
+    }
 }
 
 const limparFormulario = () => {
@@ -43,6 +56,18 @@ const limparFormulario = () => {
     data.value.salario = '';
     data.value.modalidade = null;
     data.value.tipo = null;
+};
+
+const validaFormulario = () => {
+    let valido = true;
+
+    if (data.value.titulo === '') valido = false;
+    if (data.value.descricao === '') valido = false;
+    if (data.value.salario === '') valido = false;
+    if (data.value.modalidade === '') valido = false;
+    if (data.value.tipo === '') valido = false;
+
+    return valido;
 };
 
 </script>

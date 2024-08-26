@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onActivated } from "vue";
+import { ref, onMounted, onActivated, getCurrentInstance } from "vue";
 import PesquisarVaga from "@/components/comuns/PesquisarVaga.vue";
 import Indicador from "@/components/comuns/Indicador.vue";
 import Vaga from "@/components/comuns/Vaga.vue";
@@ -14,6 +14,13 @@ const getUsuariosOnline = () => {
 
 onMounted(() => {
     setInterval(getUsuariosOnline, 2000);
+
+    const instance = getCurrentInstance();
+    const thisVue = instance.appContext.config.globalProperties;
+
+    thisVue.emitter.on('filtrarVagas', vaga => {
+        console.log('Estamos no componente HOME', vaga);
+    })
 });
 
 const vagas = ref([]);

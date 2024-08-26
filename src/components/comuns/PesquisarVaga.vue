@@ -1,5 +1,15 @@
 <script setup>
+import { ref, getCurrentInstance } from 'vue';
 
+
+const titulo = ref('');
+
+const filtrarVaga = () => {
+    const instance = getCurrentInstance();
+    const thisVue = instance.appContext.config.globalProperties;
+
+    thisVue.emitter.emit('filtrarVagas', { titulo: titulo.value })
+}
 </script>
 
 <template>
@@ -11,7 +21,8 @@
                 <div class="form-group">
                     <label>Título da vaga</label>
                     <input type="text" class="form-control"
-                        placeholder="Pesquise por palavras chaves, por exemplo 'PHP', 'Pleno', 'Analista'">
+                        placeholder="Pesquise por palavras chaves, por exemplo 'PHP', 'Pleno', 'Analista'"
+                        v-model="titulo">
                     <small class="form-text text-muted">Informe palavras que estejam relacionadas com o
                         título da vaga que você procura</small>
                 </div>
@@ -19,7 +30,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <button class="btn btn-outline-dark mt-2" type="button">Buscar</button>
+                <button class="btn btn-outline-dark mt-2" type="button" @click="filtrarVaga">Buscar</button>
             </div>
         </div>
     </div>

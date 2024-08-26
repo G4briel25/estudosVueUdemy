@@ -7,34 +7,44 @@ import Alerta from "@/components/comuns/Alerta.vue";
 
 const component = ref('Home');
 
+const alerta = ref({
+  titulo: '',
+  descricao: '',
+  tipo: ''
+});
+
+const exibirAlerta = ref(false);
 
 onMounted(() => {
   const instance = getCurrentInstance();
   const thisVue = instance.appContext.config.globalProperties;
 
-  thisVue.emitter.on('alerta', () => {
-    console.log('Mensagem de alerta aqui');
+  thisVue.emitter.on('alerta', (a) => {
+    alerta.value = a;
+
+    console.log(alerta.value);
+
+    exibirAlerta.value = true;
+    setTimeout(() => {
+      exibirAlerta.value = false
+    }, 4000);
   });
 });
-
-<<<<<<< HEAD
-=======
-const acao = (p1, p2) => {
-  console.log('Função de callback definida no componente Pai e chamada no componte Filho');
-  console.log('P1', p1);
-  console.log('P2', p2)
-}
->>>>>>> 24c6787e489fb5aa456c8707dd75c306a27e1f8a
 
 </script>
 
 <template>
 
-  <Alerta></Alerta>
-
   <VagasFavoritas></VagasFavoritas>
 
   <TopoPadrao @navegar="component = $event"></TopoPadrao>
+
+  <Alerta v-if="exibirAlerta" :tipo="alerta.tipo">
+    <template v-slot:titulo>
+      <h5>{{ alerta.titulo }}</h5>
+    </template>
+    <p>{{ alerta.descricao }}</p>
+  </Alerta>
 
   <Conteudo :conteudo="component"></Conteudo>
 </template>

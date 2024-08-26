@@ -1,5 +1,5 @@
 <script setup>
-import { defineEmits, defineProps } from 'vue';
+import { defineEmits } from 'vue';
 
 const myEmits = defineEmits(['navegar']);
 
