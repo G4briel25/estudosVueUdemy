@@ -5,7 +5,7 @@ import Conteudo from "@/components/layouts/Conteudo.vue";
 const acao = (p1, p2) => {
   console.log('Função de callback definida no componente Pai e chamada no componte Filho');
   console.log('P1', p1);
-  console.log('P2', p2);
+  console.log('P2', p2)
 }
 
 </script>
