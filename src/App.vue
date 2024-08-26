@@ -17,6 +17,14 @@ onMounted(() => {
   });
 });
 
+<<<<<<< HEAD
+=======
+const acao = (p1, p2) => {
+  console.log('Função de callback definida no componente Pai e chamada no componte Filho');
+  console.log('P1', p1);
+  console.log('P2', p2)
+}
+>>>>>>> 24c6787e489fb5aa456c8707dd75c306a27e1f8a
 
 </script>
 
