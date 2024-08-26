@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, getCurrentInstance } from 'vue';
 
 const data = ref({
     titulo: '',
@@ -8,6 +8,9 @@ const data = ref({
     modalidade: null,
     tipo: null
 });
+
+const instance = getCurrentInstance();
+const thisVue = instance.appContext.config.globalProperties;
 
 const salvarVaga = () => {
     let tempoDecorrido = Date.now();
@@ -27,9 +30,21 @@ const salvarVaga = () => {
         publicacao: dataPublicacao
     });
 
-    localStorage.setItem('vagas', JSON.stringify(vagas));
-    console.log('Dados salvos:', JSON.stringify(vagas));
+    //localStorage.setItem('vagas', JSON.stringify(vagas));
+
+    thisVue.emitter.emit('alerta')
+
+    limparFormulario();
 }
+
+const limparFormulario = () => {
+    data.value.titulo = '';
+    data.value.descricao = '';
+    data.value.salario = '';
+    data.value.modalidade = null;
+    data.value.tipo = null;
+};
+
 </script>
 
 <template>

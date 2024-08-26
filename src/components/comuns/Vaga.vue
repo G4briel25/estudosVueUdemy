@@ -1,5 +1,5 @@
 <script setup>
-import { computed, defineProps } from 'vue';
+import { computed, defineProps, getCurrentInstance, ref, watch } from 'vue';
 
 const props = defineProps({
     titulo: {
@@ -52,11 +52,38 @@ const getPublicacao = computed(() => {
     return dataPublicacao.toLocaleDateString('pt-BR');
 });
 
+
+const instancia = getCurrentInstance();
+const thisVue = instancia.appContext.config.globalProperties;
+const favoritada = ref(false);
+
+watch(favoritada, (novoValor) => {
+    if (novoValor) {
+        thisVue.emitter.emit('favoritarVaga', props.titulo);
+    } else {
+        thisVue.emitter.emit('desfavoritarVaga', props.titulo);
+    }
+});
+
 </script>
 
 <template>
     <div class="card">
-        <div class="card-header bg-dark text-white">{{ props.titulo }}</div>
+        <div class="card-header bg-dark text-white">
+            <div class="row">
+                <div class="col d-flex justify-content-between">
+                    <div>
+                        {{ props.titulo }}
+                    </div>
+                    <div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" v-model="favoritada">
+                            <label class="form-check-label">Favoritar / {{ favoritada }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card-body">
             <p>{{ props.descricao }}</p>
         </div>
