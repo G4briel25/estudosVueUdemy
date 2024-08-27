@@ -4,17 +4,16 @@ import { ref, getCurrentInstance } from 'vue';
 
 const titulo = ref('');
 
-const filtrarVaga = () => {
-    const instance = getCurrentInstance();
-    const thisVue = instance.appContext.config.globalProperties;
+const instance = getCurrentInstance();
+const thisVue = instance.appContext.config.globalProperties;
 
+const filtrarVaga = () => {
     thisVue.emitter.emit('filtrarVagas', { titulo: titulo.value })
 }
 </script>
 
 <template>
     <div class="h-100 p-5 bg-light border rounded-3">
-
         <h2>Pesquisar Vagas</h2>
         <div class="row">
             <div class="col">

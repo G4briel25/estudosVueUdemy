@@ -1,8 +1,9 @@
 <script setup>
-import { ref, onMounted, onActivated, getCurrentInstance } from "vue";
+import { ref, onMounted } from "vue";
 import PesquisarVaga from "@/components/comuns/PesquisarVaga.vue";
 import Indicador from "@/components/comuns/Indicador.vue";
-import Vaga from "@/components/comuns/Vaga.vue";
+import ListaVagas from "@/components/comuns/ListaVagas.vue";
+
 
 
 const usuariosOnline = ref(0);
@@ -14,19 +15,6 @@ const getUsuariosOnline = () => {
 
 onMounted(() => {
     setInterval(getUsuariosOnline, 2000);
-
-    const instance = getCurrentInstance();
-    const thisVue = instance.appContext.config.globalProperties;
-
-    thisVue.emitter.on('filtrarVagas', vaga => {
-        console.log('Estamos no componente HOME', vaga);
-    })
-});
-
-const vagas = ref([]);
-
-onActivated(() => {
-    vagas.value = JSON.parse(localStorage.getItem('vagas'));
 });
 
 </script>
@@ -39,12 +27,22 @@ onActivated(() => {
             </div>
         </div>
 
-        <div class="row mt-5" v-for="(vaga, index) in vagas" :key="index">
-            <div class="col">
-                <Vaga :titulo="vaga.titulo" :descricao="vaga.descricao" :salario="vaga.salario"
-                    :modalidade="vaga.modalidade" :tipo="vaga.tipo" :publicacao="vaga.publicacao" />
-            </div>
-        </div>
+        <!-- <ListaVagas>
+            <template v-slot:titulo="slotProps">
+                {{ slotProps.dadosTitulo.titulo }}
+                <hr>
+            </template>
+<template v-slot:default="slotProps">
+                {{ slotProps.vagas }}
+                <hr>
+            </template>
+
+<template v-slot:rodape="slotProps">
+                {{ slotProps.dadosRodape.titulo }}
+            </template>
+</ListaVagas> -->
+
+        <ListaVagas></ListaVagas>
 
         <div class="row mt-5">
             <div class="col-4">

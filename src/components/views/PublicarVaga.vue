@@ -35,7 +35,7 @@ const salvarVaga = () => {
 
         thisVue.emitter.emit('alerta', {
             tipo: 'sucesso',
-            titulo: `A vaga ${data.value.titulo}`,
+            titulo: `A vaga ${data.value.titulo} foi cadastrada com sucesso :)`,
             descricao: `Parabéns, a vaga foi cadastrada e poderá ser consultada por milhares de profissionais`
         });
 

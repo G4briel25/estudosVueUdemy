@@ -27,7 +27,7 @@ onMounted(() => {
     exibirAlerta.value = true;
     setTimeout(() => {
       exibirAlerta.value = false
-    }, 4000);
+    }, 5000);
   });
 });
 
